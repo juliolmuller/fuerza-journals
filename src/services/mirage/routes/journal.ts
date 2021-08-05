@@ -5,14 +5,9 @@ import { Entry } from '../../../interfaces/entry.interface';
 import dayjs from 'dayjs';
 import { User } from '../../../interfaces/user.interface';
 
-export const create = (
-  schema: any,
-  req: Request
-): { user: User; journal: Journal } | Response => {
+export const create = (schema: any, req: Request): { user: User; journal: Journal } | Response => {
   try {
-    const { title, userId } = JSON.parse(req.requestBody) as Partial<
-      Journal
-    >;
+    const { title, userId } = JSON.parse(req.requestBody) as Partial<Journal>;
     const exUser = schema.users.findBy({ id: userId });
     if (!exUser) {
       return handleErrors(null, 'No such user exists.');
@@ -37,7 +32,7 @@ export const create = (
 
 export const addEntry = (
   schema: any,
-  req: Request
+  req: Request,
 ): { journal: Journal; entry: Entry } | Response => {
   try {
     const journal = schema.journals.find(req.params.id);
@@ -71,10 +66,7 @@ export const getJournals = (schema: any, req: Request): Journal[] | Response => 
   }
 };
 
-export const getEntries = (
-  schema: any,
-  req: Request
-): { entries: Entry[] } | Response => {
+export const getEntries = (schema: any, req: Request): { entries: Entry[] } | Response => {
   try {
     const journal = schema.journals.find(req.params.id);
     return journal.entry;
