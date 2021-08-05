@@ -1,7 +1,12 @@
-import React from 'react';
+import Routes from './routes';
+import { AuthProvider } from './contexts';
 
 function App() {
-  return <h1>Fuerza Test</h1>;
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  );
 }
 
 export default App;
