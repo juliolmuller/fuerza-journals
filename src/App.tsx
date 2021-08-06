@@ -1,11 +1,14 @@
 import Routes from './routes';
 import { AuthProvider } from './contexts';
+import { JournalsProvider } from './contexts';
 import './assets/global-styles.scss';
 
 function App() {
   return (
     <AuthProvider>
-      <Routes />
+      <JournalsProvider>
+        <Routes />
+      </JournalsProvider>
     </AuthProvider>
   );
 }

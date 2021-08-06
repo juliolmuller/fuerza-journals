@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react';
-import './styles.scss'
+import './styles.scss';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -10,14 +10,10 @@ function Input({ id, label, value, ...props }: InputProps) {
 
   return (
     <div className="custom-input">
-      <input
-        id={inputId}
-        value={value}
-        {...props} />
-      <label
-        htmlFor={inputId}
-        className={String(value) && 'has-content'}
-      >{label}</label>
+      <input id={inputId} value={value} {...props} />
+      <label htmlFor={inputId} className={String(value) && 'has-content'}>
+        {label}
+      </label>
     </div>
   );
 }

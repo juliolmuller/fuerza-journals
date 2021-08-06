@@ -1,0 +1,60 @@
+
+#journal-form-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100vw;
+  min-height: 100vh;
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    .cover {
+      position: relative;
+      margin-bottom: 3rem;
+
+      span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-40%, -50%);
+
+        font-family: var(--font-serif);
+        font-size: 3rem;
+        font-weight: 700;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+
+      input {
+        width: 100%;
+        outline: none;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 1rem 1.2rem;
+      }
+
+      button {
+        width: 50%;
+        margin-top: 3rem;
+      }
+    }
+  }
+}

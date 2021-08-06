@@ -1,0 +1,53 @@
+
+#journals-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100vw;
+  min-height: 100vh;
+
+  main {
+    flex: 1;
+
+    .empty {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10rem;
+
+      padding-top: 20vh;
+    }
+
+    .journal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 16rem;
+      height: 24rem;
+      border-radius: 2px 1rem 1rem 2px;
+      border-left: 2rem solid var(--color-blue);
+      background: var(--color-darkblue);
+
+      color: white;
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 700;
+      text-decoration: none;
+
+      transition: filter 200ms;
+      transition: transform 300ms;
+
+      &:hover {
+        filter: brightness(0.9);
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
