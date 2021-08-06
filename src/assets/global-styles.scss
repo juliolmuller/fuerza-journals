@@ -1,0 +1,46 @@
+
+:root {
+  --color-background: #f8e5d6;
+  --color-card: #faf2ec;
+  --color-darkblue: #3b4e8d;
+  --color-lightblue: #b8e5e3;
+  --color-blue: #5091D6;
+
+  --font-color: #834825;
+  --font-serif: 'Abhaya Libre', serif;
+  --font-sans-serif: 'Montserrat', sans-serif;
+
+  font-size: 60%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #__next {
+  height: 100vh;
+}
+
+body {
+  background-color: var(--color-background);
+  background-image: url('./images/watermark.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+body, input, button, textarea {
+  color: var(--color-text-base);
+  font: 600 1.6rem var(--font-sans-serif);
+}
+
+a, button {
+  cursor: pointer;
+}
+
+@media (min-width: 700px) {
+  :root {
+    font-size: 62.5%;
+  }
+}
