@@ -1,15 +1,58 @@
+import { Link } from 'react-router-dom';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { FormEvent, useState } from 'react';
 import { useAuth } from '../../hooks';
+import logo from '../../assets/images/logo.png';
+import './styles.scss';
 
 function SignUpPage() {
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    signUp(username, password, email);
+  }
 
   return (
-    <>
-      <h1>SignUpPage</h1>
-      <button type="button" onClick={signIn}>
-        Sign In
-      </button>
-    </>
+    <div id="sign-up-page">
+      <div className="container">
+        <img src={logo} alt="logo" />
+
+        <header>
+          <h1>Sign Up</h1>
+          <Link to="/signin">Already have an account</Link>
+        </header>
+
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="Define a username"
+            type="text"
+            id="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <Input
+            label="Set your password"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Input
+            label="Email (optional)"
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <Button type="submit">Create account</Button>
+        </form>
+      </div>
+    </div>
   );
 }
 

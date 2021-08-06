@@ -7,6 +7,7 @@
   --color-blue: #5091D6;
 
   --font-color: #834825;
+  --font-color-link: ##6E3421;
   --font-serif: 'Abhaya Libre', serif;
   --font-sans-serif: 'Montserrat', sans-serif;
 
@@ -37,6 +38,19 @@ body, input, button, textarea {
 
 a, button {
   cursor: pointer;
+}
+
+a {
+  color: var(--font-color-link);
+  transform: filter 200ms;
+
+  &:hover {
+    filter: brightness(0.75);
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
 }
 
 @media (min-width: 700px) {
