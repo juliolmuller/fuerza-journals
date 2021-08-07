@@ -1,15 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../../components/TheHeader';
 import { useJournals } from '../../hooks';
 import mascot from '../../assets/images/mascot.png';
 import './styles.scss';
 
 function JournalsPage() {
+  const router = useHistory();
   const { isLoading, journals } = useJournals();
+
+  function handleItemNavigation(journalId: string) {
+    setTimeout(() => { // finish click animation before navigating
+      router.push(`/journals/${journalId}/notes`);
+    }, 400);
+  }
 
   return (
     <div id="journals-page">
-      <Header />
+      <Header>
+        {isLoading || !journals.length ? undefined : (
+          <Link to="/journals/new" className="new-journal-btn">
+            + Add journal
+          </Link>
+        )}
+      </Header>
 
       <main>
         {isLoading || !journals.length ? (
@@ -18,11 +31,13 @@ function JournalsPage() {
             <Link to="/journals/new">Create a journal</Link>
           </div>
         ) : (
-          journals.map((journal) => (
-            <Link to={`/journals/${journal.id}/notes`} key={journal.id} className="journal">
-              {journal.title}
-            </Link>
-          ))
+          <ul className="journals-deck">
+            {journals.map((journal) => (
+              <li key={journal.id} onClick={() => handleItemNavigation(journal.id)}>
+                {journal.title}
+              </li>
+            ))}
+          </ul>
         )}
       </main>
     </div>

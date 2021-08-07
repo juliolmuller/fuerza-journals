@@ -13,8 +13,8 @@ type JournalFormPageProps = {
 
 function JournalFormPage() {
   const router = useHistory();
-  const { isLoading, journals, createJournal, updateJournal } = useJournals();
   const { journalId } = useParams<JournalFormPageProps>();
+  const { isLoading, journals, createJournal, updateJournal } = useJournals();
   const journal = journalId ? journals.find((j) => j.id === journalId) : null;
   const [title, setTitle] = useState(journal?.title || '');
 
@@ -45,7 +45,7 @@ function JournalFormPage() {
             onChange={(event) => setTitle(event.target.value)}
             autoFocus
           />
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading || !title}>
             Save journal
           </Button>
         </form>

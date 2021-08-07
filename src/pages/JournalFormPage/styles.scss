@@ -45,10 +45,13 @@
         width: 100%;
         outline: none;
         border: none;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         border-radius: 0.5rem;
         background: rgba(255, 255, 255, 0.7);
         padding: 1rem 1.2rem;
+
+        &:focus {
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        }
       }
 
       button {

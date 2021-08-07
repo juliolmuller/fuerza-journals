@@ -6,4 +6,8 @@
 
   width: 100%;
   padding: 5rem 2rem;
+
+  @media (min-width: 768px) {
+    padding: 5rem 8rem;
+  }
 }
