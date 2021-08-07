@@ -1,5 +1,11 @@
+import { Journal, Note } from '../../contexts';
+import Header from '../../components/TheHeader';
+import Button from '../../components/Button';
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../../hooks';
+import { FormEvent, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useJournals } from '../../hooks';
+import './styles.scss';
 
 type NoteFormPageParams = {
   journalId: string;
@@ -7,24 +13,75 @@ type NoteFormPageParams = {
 };
 
 function NoteFormPage() {
-  const { signOut } = useAuth();
+  const router = useHistory();
   const { journalId, noteId } = useParams<NoteFormPageParams>();
+  const { isLoading, journals, createNote, updateNote } = useJournals();
+  const [journal, setJournal] = useState<Journal>();
+  const [note, setNote] = useState<Note>();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    if (note) {
+      await updateNote(noteId, title, content);
+    } else {
+      await createNote(journalId, title, content);
+    }
+    router.replace(`/journals/${journalId}/notes`);
+  }
+
+  // Get journal data or fallback to index page
+  useEffect(() => {
+    if (!isLoading) {
+      const journal = journals.find((j) => j.id === journalId);
+      const note = journal?.notes.find((e) => e.id === noteId);
+
+      if (!journal) {
+        console.info('Journal does note does not exist')
+        router.replace(`/journals/${journalId}/notes`);
+      } else {
+        setJournal(journal);
+
+        if (note) {
+          setNote(note);
+          setTitle(note.title);
+          setContent(note.content);
+        }
+      }
+    }
+  }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
-      <h1>
-        NoteFormPage
-        {journalId && (
-          <>
-            (journal #{journalId}
-            {noteId && <> - note #{noteId}</>})
-          </>
-        )}
-      </h1>
-      <button type="button" onClick={signOut}>
-        Sign Out
-      </button>
-    </>
+    <div id="note-form-page">
+      <Header />
+
+      <main>
+        <h2>
+          <span onClick={() => router.goBack()}>&lt;</span>
+          {journal?.title}
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={title}
+            placeholder="Title"
+            onChange={(event) => setTitle(event.target.value)}
+            autoFocus
+          />
+          <textarea
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+            placeholder="Write your note"
+            rows={5}
+          />
+          <Button type="submit" disabled={isLoading || !title}>
+            Save note
+          </Button>
+        </form>
+      </main>
+    </div>
   );
 }
 

@@ -2,9 +2,16 @@ import { createContext, FC, useEffect, useState } from 'react';
 import { useAuth } from '../hooks';
 import http from '../services/api';
 
-type Journal = {
+export type Note = {
   id: string;
   title: string;
+  content: string;
+};
+
+export type Journal = {
+  id: string;
+  title: string;
+  notes: Note[];
 };
 
 type JournalsContextProps = {
@@ -12,6 +19,8 @@ type JournalsContextProps = {
   isLoading: boolean;
   createJournal: (title: string) => Promise<void>;
   updateJournal: (id: string, title: string) => Promise<void>;
+  createNote: (journalId: string, title: string, content: string) => Promise<void>;
+  updateNote: (noteId: string, title: string, content: string) => Promise<void>;
 };
 
 export const JournalsContext = createContext({} as JournalsContextProps);
@@ -23,9 +32,18 @@ export const JournalsProvider: FC = ({ children }) => {
 
   async function fetchJournals() {
     setLoading(true);
-    const response: { journals: Journal[] } = await http.get(`/journals/${user?.id}`);
+    const { journals }: Record<'journals', Journal[]> = await http.get(`/journals/${user?.id}`);
+    const entriesSet: Record<'entries', Note[]>[] = await Promise.all(
+      journals.map((journal): Promise<Record<'entries', Note[]>> => {
+        return http.get(`/journals/entries/${journal.id}`);
+      }),
+    );
 
-    setJournals(response.journals);
+    journals.forEach((_, index) => {
+      journals[index].notes = entriesSet[index].entries;
+    });
+
+    setJournals(journals);
     setLoading(false);
   }
 
@@ -45,6 +63,22 @@ export const JournalsProvider: FC = ({ children }) => {
     await fetchJournals();
   }
 
+  async function createNote(journalId: string, title: string, content: string) {
+    setLoading(true);
+    const data = { title, content };
+    console.log(data)
+    await http.post(`/journals/entry/${journalId}`, data);
+    await fetchJournals();
+  }
+
+  async function updateNote(noteId: string, title: string, content: string) {
+    setLoading(true);
+    const data = { title, content };
+
+    await http.put(`/journals/entry/${noteId}`, data);
+    await fetchJournals();
+  }
+
   useEffect(() => {
     if (user?.id) {
       fetchJournals();
@@ -58,6 +92,8 @@ export const JournalsProvider: FC = ({ children }) => {
         isLoading,
         createJournal,
         updateJournal,
+        createNote,
+        updateNote,
       }}
     >
       {children}
