@@ -1,16 +1,16 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import mascot from '../../assets/images/mascot.png';
 import Header from '../../components/TheHeader';
 import { useJournals } from '../../hooks';
-import mascot from '../../assets/images/mascot.png';
 import './styles.scss';
 
 function JournalsPage() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { isLoading, journals } = useJournals();
 
   function handleItemNavigation(journalId: string) {
     setTimeout(() => { // finish click animation before navigating
-      router.push(`/journals/${journalId}/notes`);
+      navigate(`/journals/${journalId}/notes`);
     }, 400);
   }
 

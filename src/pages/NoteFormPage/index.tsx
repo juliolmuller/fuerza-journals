@@ -1,9 +1,8 @@
-import { Journal, Note } from '../../contexts';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
-import { useParams } from 'react-router-dom';
-import { FormEvent, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Journal, Note } from '../../contexts';
 import { useJournals } from '../../hooks';
 import './styles.scss';
 
@@ -13,7 +12,7 @@ type NoteFormPageParams = {
 };
 
 function NoteFormPage() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { journalId, noteId } = useParams<NoteFormPageParams>();
   const { isLoading, journals, createNote, updateNote } = useJournals();
   const [journal, setJournal] = useState<Journal>();
@@ -25,11 +24,11 @@ function NoteFormPage() {
     event.preventDefault();
 
     if (note) {
-      await updateNote(noteId, title, content);
+      await updateNote(noteId!, title, content);
     } else {
-      await createNote(journalId, title, content);
+      await createNote(journalId!, title, content);
     }
-    router.replace(`/journals/${journalId}/notes`);
+    navigate(`/journals/${journalId}/notes`, { replace: true });
   }
 
   // Get journal data or fallback to index page
@@ -39,8 +38,8 @@ function NoteFormPage() {
       const note = journal?.notes.find((e) => e.id === noteId);
 
       if (!journal) {
-        console.info('Journal does note does not exist')
-        router.replace(`/journals/${journalId}/notes`);
+        console.info('Journal does note does not exist');
+        navigate(`/journals/${journalId}/notes`, { replace: true });
       } else {
         setJournal(journal);
 
@@ -59,7 +58,7 @@ function NoteFormPage() {
 
       <main>
         <h2>
-          <span onClick={() => router.goBack()}>&lt;</span>
+          <span onClick={() => navigate(-1)}>&lt;</span>
           {journal?.title}
         </h2>
         <form onSubmit={handleSubmit}>

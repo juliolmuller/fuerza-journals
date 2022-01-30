@@ -1,10 +1,9 @@
+import { FormEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import cover from '../../assets/images/cover.png';
 import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
-import { useParams } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useJournals } from '../../hooks';
-import cover from '../../assets/images/cover.png';
 import './styles.scss';
 
 type JournalFormPageProps = {
@@ -12,7 +11,7 @@ type JournalFormPageProps = {
 };
 
 function JournalFormPage() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { journalId } = useParams<JournalFormPageProps>();
   const { isLoading, journals, createJournal, updateJournal } = useJournals();
   const journal = journalId ? journals.find((j) => j.id === journalId) : null;
@@ -26,7 +25,7 @@ function JournalFormPage() {
     } else {
       await createJournal(title);
     }
-    router.replace('/journals');
+    navigate('/journals', {replace: true});
   }
 
   return (

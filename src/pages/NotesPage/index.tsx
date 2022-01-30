@@ -1,4 +1,4 @@
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/TheHeader';
 import { useEffect, useState } from 'react';
 import { useJournals } from '../../hooks';
@@ -10,15 +10,16 @@ type NotesPageProps = {
 };
 
 function NotesPage() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { journalId } = useParams<NotesPageProps>();
   const { isLoading, journals } = useJournals();
   const [journal, setJournal] = useState<typeof journals[0]>();
   const notes = journal?.notes ?? [];
 
   function handleItemNavigation(noteId: string) {
-    setTimeout(() => { // finish click animation before navigating
-      router.push(`/journals/${journalId}/notes/${noteId}`);
+    setTimeout(() => {
+      // finish click animation before navigating
+      navigate(`/journals/${journalId}/notes/${noteId}`);
     }, 400);
   }
 
@@ -27,7 +28,7 @@ function NotesPage() {
     if (!isLoading) {
       const journal = journals.find((j) => j.id === journalId);
 
-      journal ? setJournal(journal) : router.replace('/journals');
+      journal ? setJournal(journal) : navigate('/journals', { replace: true });
     }
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -46,7 +47,7 @@ function NotesPage() {
           <section>
             <header>
               <h2>
-                <span onClick={() => router.push('/journals')}>&lt;</span>
+                <span onClick={() => navigate('/journals')}>&lt;</span>
                 {journal?.title}
               </h2>
               <Link to={`/journals/${journalId}/notes/new`} className="new-note-btn">
