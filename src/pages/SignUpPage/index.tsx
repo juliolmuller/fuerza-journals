@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { FormEvent, useState } from 'react';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../stores';
 import logo from '../../assets/images/logo.png';
 import './styles.scss';
 
 function SignUpPage() {
-  const { signUp } = useAuth();
+  const signUp = useAuth((state) => state.signUp);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');

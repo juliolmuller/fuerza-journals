@@ -2,8 +2,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
-import { Journal, Note } from '../../contexts';
-import { useJournals } from '../../hooks';
+import { Journal } from '../../interfaces';
+import { useJournal } from '../../stores';
 import './styles.scss';
 
 type NoteFormPageParams = {
@@ -14,19 +14,21 @@ type NoteFormPageParams = {
 function NoteFormPage() {
   const navigate = useNavigate();
   const { journalId, noteId } = useParams<NoteFormPageParams>();
-  const { isLoading, journals, createNote, updateNote } = useJournals();
+  const isLoading = useJournal((state) => state.isSaving);
+  const journals = useJournal((state) => state.journals);
+  const createEntry = useJournal((state) => state.addEntry);
+  const updateEntry = useJournal((state) => state.updateEntry);
   const [journal, setJournal] = useState<Journal>();
-  const [note, setNote] = useState<Note>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    if (note) {
-      await updateNote(noteId!, title, content);
+    if (noteId) {
+      await updateEntry(noteId, title, content);
     } else {
-      await createNote(journalId!, title, content);
+      await createEntry(journalId!, title, content);
     }
     navigate(`/journals/${journalId}/notes`, { replace: true });
   }
@@ -35,7 +37,7 @@ function NoteFormPage() {
   useEffect(() => {
     if (!isLoading) {
       const journal = journals.find((j) => j.id === journalId);
-      const note = journal?.notes.find((e) => e.id === noteId);
+      const entry = journal?.entries?.find((e) => e.id === noteId);
 
       if (!journal) {
         console.info('Journal does note does not exist');
@@ -43,10 +45,9 @@ function NoteFormPage() {
       } else {
         setJournal(journal);
 
-        if (note) {
-          setNote(note);
-          setTitle(note.title);
-          setContent(note.content);
+        if (entry) {
+          setTitle(entry.title);
+          setContent(entry.content);
         }
       }
     }

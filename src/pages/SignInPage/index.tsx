@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { FormEvent, MouseEvent, useState } from 'react';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../stores';
 import logo from '../../assets/images/logo.png';
 import './styles.scss';
 
 function SignInPage() {
-  const { signIn } = useAuth();
+  const signIn = useAuth(state => state.signIn);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

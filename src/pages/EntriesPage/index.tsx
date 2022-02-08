@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/TheHeader';
-import { useEffect, useState } from 'react';
-import { useJournals } from '../../hooks';
+import { Journal } from '../../interfaces';
+import { useJournal } from '../../stores';
 import mascot from '../../assets/images/mascot.png';
 import './styles.scss';
 
@@ -9,12 +10,13 @@ type NotesPageProps = {
   journalId: string;
 };
 
-function NotesPage() {
+function EntriesPage() {
   const navigate = useNavigate();
   const { journalId } = useParams<NotesPageProps>();
-  const { isLoading, journals } = useJournals();
-  const [journal, setJournal] = useState<typeof journals[0]>();
-  const notes = journal?.notes ?? [];
+  const isLoading = useJournal((state) => state.isFetching);
+  const journals = useJournal((state) => state.journals);
+  const [journal, setJournal] = useState<Journal>();
+  const entries = journal?.entries ?? [];
 
   function handleItemNavigation(noteId: string) {
     setTimeout(() => {
@@ -27,17 +29,16 @@ function NotesPage() {
   useEffect(() => {
     if (!isLoading) {
       const journal = journals.find((j) => j.id === journalId);
-
       journal ? setJournal(journal) : navigate('/journals', { replace: true });
     }
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div id="notes-page">
-      <Header>{isLoading || !notes.length ? undefined : null}</Header>
+      <Header>{isLoading || !entries.length ? undefined : null}</Header>
 
       <main>
-        {isLoading || !notes.length ? (
+        {isLoading || !entries.length ? (
           <div className="empty">
             <h2>{journal?.title}</h2>
             <img src={mascot} alt="app mascot" />
@@ -56,9 +57,9 @@ function NotesPage() {
             </header>
 
             <ul className="notes-deck">
-              {notes.map((note) => (
-                <li key={note.id} onClick={() => handleItemNavigation(note.id)}>
-                  {note.title}
+              {entries.map((entry) => (
+                <li key={entry.id} onClick={() => entry.id && handleItemNavigation(entry.id)}>
+                  {entry.title}
                 </li>
               ))}
             </ul>
@@ -69,4 +70,4 @@ function NotesPage() {
   );
 }
 
-export default NotesPage;
+export default EntriesPage;

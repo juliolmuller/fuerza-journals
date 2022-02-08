@@ -1,3 +1,5 @@
+import { Entry } from './entry.interface';
+
 export interface Journal {
   id?: string;
   title: string;
@@ -6,4 +8,5 @@ export interface Journal {
   updatedAt?: string;
   userId?: string;
   entryIds: string[] | null;
+  entries?: Entry[];
 }
