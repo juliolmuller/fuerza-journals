@@ -14,6 +14,4 @@ const useJournalStore = createStore<JournalStore>(
   ),
 );
 
-useJournalStore.getState().fetch();
-
 export default useJournalStore;

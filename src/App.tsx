@@ -4,11 +4,11 @@ import { useAuth } from './stores';
 import './assets/global-styles.scss';
 
 function App() {
-  const isAuthenticated = useAuth((state) => state.isAuthenticated());
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
 
   return (
     <BrowserRouter>
-      <BrowserRouter>{isAuthenticated ? <AuthRoutes /> : <PublicRoutes />}</BrowserRouter>
+      {isAuthenticated ? <AuthRoutes /> : <PublicRoutes />}
     </BrowserRouter>
   );
 }

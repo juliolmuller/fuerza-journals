@@ -6,14 +6,14 @@ import { Journal } from '../../interfaces';
 import { useJournal } from '../../stores';
 import './styles.scss';
 
-type NoteFormPageParams = {
+type EntryFormPageParams = {
   journalId: string;
-  noteId: string;
+  entryId: string;
 };
 
-function NoteFormPage() {
+function EntryFormPage() {
   const navigate = useNavigate();
-  const { journalId, noteId } = useParams<NoteFormPageParams>();
+  const { journalId, entryId } = useParams<EntryFormPageParams>();
   const isLoading = useJournal((state) => state.isSaving);
   const journals = useJournal((state) => state.journals);
   const createEntry = useJournal((state) => state.addEntry);
@@ -25,23 +25,23 @@ function NoteFormPage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    if (noteId) {
-      await updateEntry(noteId, title, content);
+    if (entryId) {
+      await updateEntry(entryId, title, content);
     } else {
       await createEntry(journalId!, title, content);
     }
-    navigate(`/journals/${journalId}/notes`, { replace: true });
+    navigate(`/journals/${journalId}/entries`, { replace: true });
   }
 
   // Get journal data or fallback to index page
   useEffect(() => {
     if (!isLoading) {
       const journal = journals.find((j) => j.id === journalId);
-      const entry = journal?.entries?.find((e) => e.id === noteId);
+      const entry = journal?.entries?.find((e) => e.id === entryId);
 
       if (!journal) {
-        console.info('Journal does note does not exist');
-        navigate(`/journals/${journalId}/notes`, { replace: true });
+        console.info('Journal does not exist');
+        navigate(`/journals/${journalId}/entries`, { replace: true });
       } else {
         setJournal(journal);
 
@@ -54,7 +54,7 @@ function NoteFormPage() {
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div id="note-form-page">
+    <div id="entry-form-page">
       <Header />
 
       <main>
@@ -85,4 +85,4 @@ function NoteFormPage() {
   );
 }
 
-export default NoteFormPage;
+export default EntryFormPage;

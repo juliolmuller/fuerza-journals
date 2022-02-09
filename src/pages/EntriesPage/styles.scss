@@ -1,5 +1,5 @@
 
-#notes-page {
+#entries-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +7,7 @@
   width: 100vw;
   min-height: 100vh;
 
-  .new-note-btn {
+  .new-entry-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +76,7 @@
       align-items: center;
     }
 
-    .notes-deck {
+    .entries-deck {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: 20rem;

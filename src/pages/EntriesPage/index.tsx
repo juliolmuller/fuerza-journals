@@ -6,22 +6,22 @@ import { useJournal } from '../../stores';
 import mascot from '../../assets/images/mascot.png';
 import './styles.scss';
 
-type NotesPageProps = {
+type EntriesPageProps = {
   journalId: string;
 };
 
 function EntriesPage() {
   const navigate = useNavigate();
-  const { journalId } = useParams<NotesPageProps>();
+  const { journalId } = useParams<EntriesPageProps>();
   const isLoading = useJournal((state) => state.isFetching);
   const journals = useJournal((state) => state.journals);
   const [journal, setJournal] = useState<Journal>();
   const entries = journal?.entries ?? [];
 
-  function handleItemNavigation(noteId: string) {
+  function handleItemNavigation(entryId: string) {
     setTimeout(() => {
       // finish click animation before navigating
-      navigate(`/journals/${journalId}/notes/${noteId}`);
+      navigate(`/journals/${journalId}/entries/${entryId}`);
     }, 400);
   }
 
@@ -34,7 +34,7 @@ function EntriesPage() {
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div id="notes-page">
+    <div id="entries-page">
       <Header>{isLoading || !entries.length ? undefined : null}</Header>
 
       <main>
@@ -42,7 +42,7 @@ function EntriesPage() {
           <div className="empty">
             <h2>{journal?.title}</h2>
             <img src={mascot} alt="app mascot" />
-            <Link to={`/journals/${journalId}/notes/new}`}>Create a note</Link>
+            <Link to={`/journals/${journalId}/entries/new`}>Create a note</Link>
           </div>
         ) : (
           <section>
@@ -51,12 +51,12 @@ function EntriesPage() {
                 <span onClick={() => navigate('/journals')}>&lt;</span>
                 {journal?.title}
               </h2>
-              <Link to={`/journals/${journalId}/notes/new`} className="new-note-btn">
+              <Link to={`/journals/${journalId}/entries/new`} className="new-entry-btn">
                 + Add note
               </Link>
             </header>
 
-            <ul className="notes-deck">
+            <ul className="entries-deck">
               {entries.map((entry) => (
                 <li key={entry.id} onClick={() => entry.id && handleItemNavigation(entry.id)}>
                   {entry.title}

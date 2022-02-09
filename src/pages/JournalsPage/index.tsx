@@ -12,7 +12,7 @@ function JournalsPage() {
   function handleItemNavigation(journalId: string) {
     setTimeout(() => {
       // finish click animation before navigating
-      navigate(`/journals/${journalId}/notes`);
+      navigate(`/journals/${journalId}/entries`);
     }, 400);
   }
 

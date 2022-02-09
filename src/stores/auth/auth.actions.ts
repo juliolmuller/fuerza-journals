@@ -14,15 +14,15 @@ function authStoreActions(set: SetState<AuthStore>, get: GetState<AuthStore>): A
 
   async function signIn(username: string, password: string) {
     const data = { username, password };
-    const response = await http.post('/auth/login', data);
-    const { user, token } = response.data;
+    const auth: any = await http.post('/auth/login', data);
+    const { user, token } = auth;
     resolveAuthentication(user, token);
   }
 
   async function signUp(username: string, password: string, email?: string) {
     const data = { email, username, password };
-    const response = await http.post('/auth/signup', data);
-    const { user = null, token = null } = response.data;
+    const auth: any = await http.post('/auth/signup', data);
+    const { user = null, token = null } = auth;
     resolveAuthentication(user, token);
   }
 
