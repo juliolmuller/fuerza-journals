@@ -25,7 +25,7 @@ http.interceptors.request.use((config: AxiosRequestConfig) => {
     const token = authStorage && JSON.parse(authStorage)?.token;
 
     if (token) {
-      config.headers.authorization = `Bearer ${token}`;
+      config.headers!.authorization = `Bearer ${token}`;
     }
   } catch (error) {
     console.log('Unable to retrieve token from storage', 'error');

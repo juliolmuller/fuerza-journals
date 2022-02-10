@@ -1,10 +1,9 @@
+import { FormEvent, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import cover from '../../assets/images/cover.png';
 import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
-import { useParams } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useJournals } from '../../hooks';
-import cover from '../../assets/images/cover.png';
+import { useJournal } from '../../stores';
 import './styles.scss';
 
 type JournalFormPageProps = {
@@ -12,21 +11,24 @@ type JournalFormPageProps = {
 };
 
 function JournalFormPage() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { journalId } = useParams<JournalFormPageProps>();
-  const { isLoading, journals, createJournal, updateJournal } = useJournals();
-  const journal = journalId ? journals.find((j) => j.id === journalId) : null;
+  const isLoading = useJournal((state) => state.isSaving);
+  const journals = useJournal((state) => state.journals);
+  const createJournal = useJournal((state) => state.create);
+  const updateJournal = useJournal((state) => state.update);
+  const journal = useMemo(() => journals.find((j) => j.id === journalId), [journalId]); // eslint-disable-line react-hooks/exhaustive-deps
   const [title, setTitle] = useState(journal?.title || '');
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    if (journal) {
+    if (journal?.id) {
       await updateJournal(journal.id, title);
     } else {
       await createJournal(title);
     }
-    router.replace('/journals');
+    navigate('/journals', { replace: true });
   }
 
   return (

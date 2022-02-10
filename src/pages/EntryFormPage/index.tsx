@@ -1,65 +1,65 @@
-import { Journal, Note } from '../../contexts';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
-import { useParams } from 'react-router-dom';
-import { FormEvent, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useJournals } from '../../hooks';
+import { Journal } from '../../interfaces';
+import { useJournal } from '../../stores';
 import './styles.scss';
 
-type NoteFormPageParams = {
+type EntryFormPageParams = {
   journalId: string;
-  noteId: string;
+  entryId: string;
 };
 
-function NoteFormPage() {
-  const router = useHistory();
-  const { journalId, noteId } = useParams<NoteFormPageParams>();
-  const { isLoading, journals, createNote, updateNote } = useJournals();
+function EntryFormPage() {
+  const navigate = useNavigate();
+  const { journalId, entryId } = useParams<EntryFormPageParams>();
+  const isLoading = useJournal((state) => state.isSaving);
+  const journals = useJournal((state) => state.journals);
+  const createEntry = useJournal((state) => state.addEntry);
+  const updateEntry = useJournal((state) => state.updateEntry);
   const [journal, setJournal] = useState<Journal>();
-  const [note, setNote] = useState<Note>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    if (note) {
-      await updateNote(noteId, title, content);
+    if (entryId) {
+      await updateEntry(entryId, title, content);
     } else {
-      await createNote(journalId, title, content);
+      await createEntry(journalId!, title, content);
     }
-    router.replace(`/journals/${journalId}/notes`);
+    navigate(`/journals/${journalId}/entries`, { replace: true });
   }
 
   // Get journal data or fallback to index page
   useEffect(() => {
     if (!isLoading) {
       const journal = journals.find((j) => j.id === journalId);
-      const note = journal?.notes.find((e) => e.id === noteId);
+      const entry = journal?.entries?.find((e) => e.id === entryId);
 
       if (!journal) {
-        console.info('Journal does note does not exist')
-        router.replace(`/journals/${journalId}/notes`);
+        console.info('Journal does not exist');
+        navigate(`/journals/${journalId}/entries`, { replace: true });
       } else {
         setJournal(journal);
 
-        if (note) {
-          setNote(note);
-          setTitle(note.title);
-          setContent(note.content);
+        if (entry) {
+          setTitle(entry.title);
+          setContent(entry.content);
         }
       }
     }
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div id="note-form-page">
+    <div id="entry-form-page">
       <Header />
 
       <main>
         <h2>
-          <span onClick={() => router.goBack()}>&lt;</span>
+          <span onClick={() => navigate(-1)}>&lt;</span>
           {journal?.title}
         </h2>
         <form onSubmit={handleSubmit}>
@@ -85,4 +85,4 @@ function NoteFormPage() {
   );
 }
 
-export default NoteFormPage;
+export default EntryFormPage;

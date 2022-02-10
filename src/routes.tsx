@@ -1,44 +1,45 @@
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffectOnce } from 'react-use';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import JournalFormPage from './pages/JournalFormPage';
 import JournalsPage from './pages/JournalsPage';
-import NoteFormPage from './pages/NoteFormPage';
-import NotesPage from './pages/NotesPage';
-import { useAuth } from './hooks';
+import EntryFormPage from './pages/EntryFormPage';
+import EntriesPage from './pages/EntriesPage';
+import { useJournal } from './stores';
 
-function PublicRoutes() {
+export function PublicRoutes() {
   return (
-    <Switch>
-      <Route path="/signin" component={SignInPage} />
-      <Route path="/signup" component={SignUpPage} />
+    <Routes>
+      <Route path="/signin" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
 
       {/* if no route matches, redirect to "/journals" */}
-      <Redirect to="/signin" />
-    </Switch>
+      <Route path="*" element={<Navigate replace to="/signin" />} />
+    </Routes>
   );
 }
 
-function AuthRoutes() {
+export function AuthRoutes() {
+  const fetchUserJournals = useJournal((state) => state.fetch);
+
+  useEffectOnce(() => {
+    fetchUserJournals();
+  });
+
   return (
-    <Switch>
-      <Route path="/journals" exact component={JournalsPage} />
-      <Route path="/journals/new" exact component={JournalFormPage} />
-      <Route path="/journals/:journalId" exact component={JournalFormPage} />
-      <Route path="/journals/:journalId/notes" exact component={NotesPage} />
-      <Route path="/journals/:journalId/notes/new" exact component={NoteFormPage} />
-      <Route path="/journals/:journalId/notes/:noteId" exact component={NoteFormPage} />
+    <Routes>
+      <Route path="/journals">
+        <Route index element={<JournalsPage />} />
+        <Route path="/journals/new" element={<JournalFormPage />} />
+        <Route path="/journals/:journalId" element={<JournalFormPage />} />
+        <Route path="/journals/:journalId/entries" element={<EntriesPage />} />
+        <Route path="/journals/:journalId/entries/new" element={<EntryFormPage />} />
+        <Route path="/journals/:journalId/entries/:entryId" element={<EntryFormPage />} />
+      </Route>
 
       {/* if no route matches, redirect to "/journals" */}
-      <Redirect to="/journals" />
-    </Switch>
+      <Route path="*" element={<Navigate replace to="/journals" />} />
+    </Routes>
   );
 }
-
-function Routes() {
-  const { isAuthenticated } = useAuth();
-
-  return <BrowserRouter>{isAuthenticated ? <AuthRoutes /> : <PublicRoutes />}</BrowserRouter>;
-}
-
-export default Routes;

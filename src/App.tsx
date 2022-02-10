@@ -1,15 +1,15 @@
-import Routes from './routes';
-import { AuthProvider } from './contexts';
-import { JournalsProvider } from './contexts';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthRoutes, PublicRoutes } from './routes';
+import { useAuth } from './stores';
 import './assets/global-styles.scss';
 
 function App() {
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
+
   return (
-    <AuthProvider>
-      <JournalsProvider>
-        <Routes />
-      </JournalsProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      {isAuthenticated ? <AuthRoutes /> : <PublicRoutes />}
+    </BrowserRouter>
   );
 }
 

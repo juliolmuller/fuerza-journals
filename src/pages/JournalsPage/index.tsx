@@ -1,16 +1,18 @@
-import { Link, useHistory } from 'react-router-dom';
-import Header from '../../components/TheHeader';
-import { useJournals } from '../../hooks';
+import { Link, useNavigate } from 'react-router-dom';
 import mascot from '../../assets/images/mascot.png';
+import Header from '../../components/TheHeader';
+import { useJournal } from '../../stores';
 import './styles.scss';
 
 function JournalsPage() {
-  const router = useHistory();
-  const { isLoading, journals } = useJournals();
+  const navigate = useNavigate();
+  const isLoading = useJournal((state) => state.isFetching);
+  const journals = useJournal((state) => state.journals);
 
   function handleItemNavigation(journalId: string) {
-    setTimeout(() => { // finish click animation before navigating
-      router.push(`/journals/${journalId}/notes`);
+    setTimeout(() => {
+      // finish click animation before navigating
+      navigate(`/journals/${journalId}/entries`);
     }, 400);
   }
 
@@ -33,7 +35,7 @@ function JournalsPage() {
         ) : (
           <ul className="journals-deck">
             {journals.map((journal) => (
-              <li key={journal.id} onClick={() => handleItemNavigation(journal.id)}>
+              <li key={journal.id} onClick={() => journal.id && handleItemNavigation(journal.id)}>
                 {journal.title}
               </li>
             ))}

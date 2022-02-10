@@ -1,10 +1,10 @@
 import { MouseEvent, ReactNode } from 'react';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../stores';
 import logo from '../../assets/images/logo.png';
 import './styles.scss';
 
 function DefaultHeaderButton() {
-  const { signOut } = useAuth();
+  const signOut = useAuth(state => state.signOut);
 
   function handleSignOut(event: MouseEvent) {
     event.preventDefault();
