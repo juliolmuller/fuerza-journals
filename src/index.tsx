@@ -4,9 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from '~/App';
 import { setupServer } from '~/services/mirage/server';
 
-if (import.meta.env.DEV) {
-  setupServer();
-}
+setupServer();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
