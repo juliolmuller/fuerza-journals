@@ -1,4 +1,4 @@
-import { GetState, SetState } from 'zustand';
+import { StoreApi } from 'zustand';
 
 import { Journal, Entry } from '~/interfaces';
 import http from '~/services/api';
@@ -8,8 +8,8 @@ import { useAuth } from '..';
 import { JournalActions, JournalStore } from './journal.types';
 
 function journalStoreActions(
-  set: SetState<JournalStore>,
-  get: GetState<JournalStore>,
+  set: StoreApi<JournalStore>['setState'],
+  get: StoreApi<JournalStore>['getState'],
 ): JournalActions {
   async function fetch() {
     try {
