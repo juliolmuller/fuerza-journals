@@ -1,7 +1,7 @@
 import { GetState, SetState } from 'zustand';
 
-import { Journal, Entry } from '../../interfaces';
-import http from '../../services/api';
+import { Journal, Entry } from '~/interfaces';
+import http from '~/services/api';
 
 import { useAuth } from '..';
 

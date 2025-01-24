@@ -1,6 +1,7 @@
 import { Response, Request } from 'miragejs';
 
-import { User } from '../../../interfaces/user.interface';
+import { User } from '~/interfaces/user.interface';
+
 import { handleErrors } from '../server';
 
 function generateToken() {

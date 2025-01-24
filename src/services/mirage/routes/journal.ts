@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import { Response, Request } from 'miragejs';
 
-import { Entry } from '../../../interfaces/entry.interface';
-import { Journal } from '../../../interfaces/journal.interface';
-import { User } from '../../../interfaces/user.interface';
+import { Entry } from '~/interfaces/entry.interface';
+import { Journal } from '~/interfaces/journal.interface';
+import { User } from '~/interfaces/user.interface';
+
 import { handleErrors } from '../server';
 
 export function create(schema: any, req: Request): { user: User; journal: Journal } | Response {

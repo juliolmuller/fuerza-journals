@@ -1,10 +1,10 @@
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../../assets/images/logo.png';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import { useAuth } from '../../stores';
+import logo from '~/assets/images/logo.png';
+import Button from '~/components/Button';
+import Input from '~/components/Input';
+import { useAuth } from '~/stores';
 import './styles.scss';
 
 function SignUpPage() {

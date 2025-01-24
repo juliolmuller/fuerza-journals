@@ -1,6 +1,7 @@
 import { GetState, SetState } from 'zustand';
 
-import http from '../../services/api';
+import http from '~/services/api';
+
 import { AuthActions, AuthStore } from './auth.types';
 
 function authStoreActions(set: SetState<AuthStore>, get: GetState<AuthStore>): AuthActions {

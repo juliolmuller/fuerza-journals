@@ -1,7 +1,7 @@
 import { MouseEvent, ReactNode } from 'react';
 
-import logo from '../../assets/images/logo.png';
-import { useAuth } from '../../stores';
+import logo from '~/assets/images/logo.png';
+import { useAuth } from '~/stores';
 import './styles.scss';
 
 function DefaultHeaderButton() {
