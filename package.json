@@ -7,9 +7,10 @@
   "homepage": "https://fuerza-nocturnal.vercel.app/signin",
   "scripts": {
     "prepare": "husky",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
     "lint": "eslint --fix ."
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "@types/node": "^22.10.10",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.18.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import-helpers": "^2.0.1",
@@ -39,20 +41,11 @@
     "lint-staged": "^15.4.2",
     "miragejs": "^0.1.43",
     "prettier": "^3.4.2",
-    "react-scripts": "^4.0.3",
-    "sass": "^1.49.0",
-    "typescript": "^4.5.5"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "rollup-plugin-analyzer": "^4.0.0",
+    "sass": "^1.83.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.4"
   }
 }

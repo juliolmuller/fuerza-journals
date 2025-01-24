@@ -1,11 +1,15 @@
-import { randomBytes } from 'crypto';
 import { Response, Request } from 'miragejs';
 
 import { User } from '../../../interfaces/user.interface';
 import { handleErrors } from '../server';
 
 function generateToken() {
-  return randomBytes(8).toString('hex');
+  const randomFloatNumber = Math.random();
+  const randomIntNumber = Math.floor(randomFloatNumber * Math.pow(10, 16));
+  const randomHexNumber = randomIntNumber.toString(16);
+  const randomSlicedHexNumber = randomHexNumber.slice(0, 8);
+
+  return randomSlicedHexNumber;
 }
 
 export interface AuthResponse {

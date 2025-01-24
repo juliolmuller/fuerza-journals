@@ -5,7 +5,7 @@ import { AuthActions, AuthStore } from './auth.types';
 
 function authStoreActions(set: SetState<AuthStore>, get: GetState<AuthStore>): AuthActions {
   function resolveAuthentication(user: any = null, token: any = null) {
-    const storageKey = process.env.REACT_APP_AUTH_STORAGE_KEY as string;
+    const storageKey = import.meta.env.VITE_AUTH_STORAGE_KEY as string;
 
     set({ user, isAuthenticated: Boolean(token) });
     if (user && token) {
@@ -28,7 +28,7 @@ function authStoreActions(set: SetState<AuthStore>, get: GetState<AuthStore>): A
   }
 
   async function signOut() {
-    const storageKey = process.env.REACT_APP_AUTH_STORAGE_KEY as string;
+    const storageKey = import.meta.env.VITE_AUTH_STORAGE_KEY as string;
     set({ user: null, isAuthenticated: false });
     sessionStorage.removeItem(storageKey);
   }
