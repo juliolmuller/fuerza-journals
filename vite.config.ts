@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 import rollupAnalyze from 'rollup-plugin-analyzer';
 import { defineConfig } from 'vite';
@@ -17,10 +16,4 @@ export default defineConfig({
     },
   },
   plugins: [react(), tsconfigPaths()],
-  // test: {
-  //   environment: 'jsdom',
-  //   globals: true,
-  //   mockReset: true,
-  //   setupFiles: `${__dirname}/src/__test__/setup.ts`,
-  // },
 });
