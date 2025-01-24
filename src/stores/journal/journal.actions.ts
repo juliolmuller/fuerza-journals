@@ -1,17 +1,20 @@
 import { GetState, SetState } from 'zustand';
+
 import { Journal, Entry } from '../../interfaces';
 import http from '../../services/api';
-import {useAuth} from '..'
+
+import { useAuth } from '..';
+
 import { JournalActions, JournalStore } from './journal.types';
 
-const journalStoreActions = (
+function journalStoreActions(
   set: SetState<JournalStore>,
   get: GetState<JournalStore>,
-): JournalActions => {
+): JournalActions {
   async function fetch() {
     try {
       set({ isFetching: true });
-      const user = useAuth.getState().user
+      const user = useAuth.getState().user;
       const { journals }: Record<'journals', Journal[]> = await http.get(`/journals/${user?.id}`);
       const entriesSet: Record<'entries', Entry[]>[] = await Promise.all(
         journals.map((journal): Promise<Record<'entries', Entry[]>> => {
@@ -32,7 +35,7 @@ const journalStoreActions = (
   async function create(title: string) {
     try {
       set({ isSaving: true });
-      const user = useAuth.getState().user
+      const user = useAuth.getState().user;
       const data = { title, userId: user?.id };
 
       await http.post('/journals', data);
@@ -45,7 +48,7 @@ const journalStoreActions = (
   async function update(id: string, title: string) {
     try {
       set({ isSaving: true });
-      const user = useAuth.getState().user
+      const user = useAuth.getState().user;
       const data = { title, userId: user?.id };
 
       await http.put(`/journals/${id}`, data);
@@ -86,6 +89,6 @@ const journalStoreActions = (
     addEntry,
     updateEntry,
   };
-};
+}
 
 export default journalStoreActions;

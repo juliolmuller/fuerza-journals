@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+
 import mascot from '../../assets/images/mascot.png';
 import Header from '../../components/TheHeader';
 import { useJournal } from '../../stores';

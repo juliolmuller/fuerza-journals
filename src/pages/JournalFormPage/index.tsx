@@ -1,8 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import cover from '../../assets/images/cover.png';
-import Header from '../../components/TheHeader';
 import Button from '../../components/Button';
+import Header from '../../components/TheHeader';
 import { useJournal } from '../../stores';
 import './styles.scss';
 

@@ -1,8 +1,9 @@
 import createStore from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { AuthStore } from './auth.types';
+
 import actions from './auth.actions';
 import initialState from './auth.state';
+import { AuthStore } from './auth.types';
 
 const useAuthStore = createStore<AuthStore>(
   devtools(

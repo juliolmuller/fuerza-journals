@@ -1,11 +1,12 @@
-import { Response, Request } from 'miragejs';
-import { handleErrors } from '../server';
-import { Journal } from '../../../interfaces/journal.interface';
-import { Entry } from '../../../interfaces/entry.interface';
 import dayjs from 'dayjs';
-import { User } from '../../../interfaces/user.interface';
+import { Response, Request } from 'miragejs';
 
-export const create = (schema: any, req: Request): { user: User; journal: Journal } | Response => {
+import { Entry } from '../../../interfaces/entry.interface';
+import { Journal } from '../../../interfaces/journal.interface';
+import { User } from '../../../interfaces/user.interface';
+import { handleErrors } from '../server';
+
+export function create(schema: any, req: Request): { user: User; journal: Journal } | Response {
   try {
     const { title, userId } = JSON.parse(req.requestBody) as Partial<Journal>;
     const exUser = schema.users.findBy({ id: userId });
@@ -28,12 +29,9 @@ export const create = (schema: any, req: Request): { user: User; journal: Journa
   } catch (error) {
     return handleErrors(error, 'Failed to create Journal.');
   }
-};
+}
 
-export const addEntry = (
-  schema: any,
-  req: Request,
-): { journal: Journal; entry: Entry } | Response => {
+export function addEntry(schema: any, req: Request): { journal: Journal; entry: Entry } | Response {
   try {
     const journal = schema.journals.find(req.params.id);
     const { title, content } = JSON.parse(req.requestBody) as Partial<Entry>;
@@ -55,27 +53,27 @@ export const addEntry = (
   } catch (error) {
     return handleErrors(error, 'Failed to save entry.');
   }
-};
+}
 
-export const getJournals = (schema: any, req: Request): Journal[] | Response => {
+export function getJournals(schema: any, req: Request): Journal[] | Response {
   try {
     const user = schema.users.find(req.params.id);
     return user.journal as Journal[];
   } catch (error) {
     return handleErrors(error, 'Could not get user journals.');
   }
-};
+}
 
-export const getEntries = (schema: any, req: Request): { entries: Entry[] } | Response => {
+export function getEntries(schema: any, req: Request): { entries: Entry[] } | Response {
   try {
     const journal = schema.journals.find(req.params.id);
     return journal.entry;
   } catch (error) {
     return handleErrors(error, 'Failed to get Journal entries.');
   }
-};
+}
 
-export const updateJournal = (schema: any, req: Request): Journal | Response => {
+export function updateJournal(schema: any, req: Request): Journal | Response {
   try {
     const journal = schema.journals.find(req.params.id);
     const data = JSON.parse(req.requestBody) as Partial<Journal>;
@@ -88,9 +86,9 @@ export const updateJournal = (schema: any, req: Request): Journal | Response => 
   } catch (error) {
     return handleErrors(error, 'Failed to update Journal.');
   }
-};
+}
 
-export const updateEntry = (schema: any, req: Request): Entry | Response => {
+export function updateEntry(schema: any, req: Request): Entry | Response {
   try {
     const entry = schema.entries.find(req.params.id);
     const data = JSON.parse(req.requestBody) as Partial<Entry>;
@@ -103,4 +101,4 @@ export const updateEntry = (schema: any, req: Request): Entry | Response => {
   } catch (error) {
     return handleErrors(error, 'Failed to update entry.');
   }
-};
+}

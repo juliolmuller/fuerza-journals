@@ -1,4 +1,5 @@
 import { GetState, SetState } from 'zustand';
+
 import http from '../../services/api';
 import { AuthActions, AuthStore } from './auth.types';
 

@@ -1,8 +1,9 @@
 import { Server, Model, Factory, Response, belongsTo, hasMany } from 'miragejs';
-import user from './routes/user';
-import * as journal from './routes/journal';
 
-export const handleErrors = (error: any, message = 'An error ocurred') => {
+import * as journal from './routes/journal';
+import user from './routes/user';
+
+export function handleErrors(error: any, message = 'An error occurred') {
   console.error('Error: ', error);
   return new Response(400, undefined, {
     data: {
@@ -10,9 +11,9 @@ export const handleErrors = (error: any, message = 'An error ocurred') => {
       isError: true,
     },
   });
-};
+}
 
-export const setupServer = (env?: string): Server => {
+export function setupServer(env?: string): Server {
   return new Server({
     environment: env ?? 'development',
 
@@ -57,4 +58,4 @@ export const setupServer = (env?: string): Server => {
       this.put('/journals/:id', journal.updateJournal);
     },
   });
-};
+}
