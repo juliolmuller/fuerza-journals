@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
 import { FormEvent, MouseEvent, useState } from 'react';
-import { useAuth } from '../../stores';
-import logo from '../../assets/images/logo.png';
+import { Link } from 'react-router-dom';
+
+import logo from '~/assets/images/logo.png';
+import Button from '~/components/Button';
+import Input from '~/components/Input';
+import { useAuth } from '~/stores';
 import './styles.scss';
 
 function SignInPage() {
-  const signIn = useAuth(state => state.signIn);
+  const signIn = useAuth((state) => state.signIn);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

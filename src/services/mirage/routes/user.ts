@@ -1,16 +1,24 @@
 import { Response, Request } from 'miragejs';
-import { handleErrors } from '../server';
-import { User } from '../../../interfaces/user.interface';
-import { randomBytes } from 'crypto';
 
-const generateToken = () => randomBytes(8).toString('hex');
+import { User } from '~/interfaces/user.interface';
+
+import { handleErrors } from '../server';
+
+function generateToken() {
+  const randomFloatNumber = Math.random();
+  const randomIntNumber = Math.floor(randomFloatNumber * Math.pow(10, 16));
+  const randomHexNumber = randomIntNumber.toString(16);
+  const randomSlicedHexNumber = randomHexNumber.slice(0, 8);
+
+  return randomSlicedHexNumber;
+}
 
 export interface AuthResponse {
   token: string;
   user: User;
 }
 
-const login = (schema: any, req: Request): AuthResponse | Response => {
+function login(schema: any, req: Request): AuthResponse | Response {
   const { username, password } = JSON.parse(req.requestBody);
   const user = schema.users.findBy({ username });
   if (!user) {
@@ -24,9 +32,9 @@ const login = (schema: any, req: Request): AuthResponse | Response => {
     user: user.attrs as User,
     token,
   };
-};
+}
 
-const signup = (schema: any, req: Request): AuthResponse | Response => {
+function signup(schema: any, req: Request): AuthResponse | Response {
   const data = JSON.parse(req.requestBody);
   const exUser = schema.users.findBy({ username: data.username });
   if (exUser) {
@@ -38,9 +46,8 @@ const signup = (schema: any, req: Request): AuthResponse | Response => {
     user: user.attrs as User,
     token,
   };
-};
+}
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,
   signup,

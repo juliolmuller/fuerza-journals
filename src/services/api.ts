@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios, { AxiosError, AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 /**
@@ -19,7 +20,7 @@ http.defaults.headers.post['Content-Type'] = 'application/json';
  * (assuming the server requires the token in a header called "authorization")
  * ===========================================================================
  */
-http.interceptors.request.use((config: AxiosRequestConfig) => {
+http.interceptors.request.use((config) => {
   try {
     const authStorage = localStorage.getItem('FORZA::auth');
     const token = authStorage && JSON.parse(authStorage)?.token;

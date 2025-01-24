@@ -1,9 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Header from '../../components/TheHeader';
-import Button from '../../components/Button';
-import { Journal } from '../../interfaces';
-import { useJournal } from '../../stores';
+
+import Button from '~/components/Button';
+import Header from '~/components/TheHeader';
+import { Journal } from '~/interfaces';
+import { useJournal } from '~/stores';
 import './styles.scss';
 
 type EntryFormPageParams = {

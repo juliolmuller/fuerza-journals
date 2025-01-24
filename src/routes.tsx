@@ -1,12 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useEffectOnce } from 'react-use';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import JournalFormPage from './pages/JournalFormPage';
-import JournalsPage from './pages/JournalsPage';
-import EntryFormPage from './pages/EntryFormPage';
-import EntriesPage from './pages/EntriesPage';
-import { useJournal } from './stores';
+
+import EntriesPage from '~/pages/EntriesPage';
+import EntryFormPage from '~/pages/EntryFormPage';
+import JournalFormPage from '~/pages/JournalFormPage';
+import JournalsPage from '~/pages/JournalsPage';
+import SignInPage from '~/pages/SignInPage';
+import SignUpPage from '~/pages/SignUpPage';
+import { useJournal } from '~/stores';
 
 export function PublicRoutes() {
   return (

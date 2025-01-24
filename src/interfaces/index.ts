@@ -1,3 +1,3 @@
-export * from './entry.interface'
-export * from './journal.interface'
-export * from './user.interface'
+export * from './entry.interface';
+export * from './journal.interface';
+export * from './user.interface';

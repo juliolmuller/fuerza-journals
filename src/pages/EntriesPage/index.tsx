@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Header from '../../components/TheHeader';
-import { Journal } from '../../interfaces';
-import { useJournal } from '../../stores';
-import mascot from '../../assets/images/mascot.png';
+
+import mascot from '~/assets/images/mascot.png';
+import Header from '~/components/TheHeader';
+import { Journal } from '~/interfaces';
+import { useJournal } from '~/stores';
 import './styles.scss';
 
 type EntriesPageProps = {

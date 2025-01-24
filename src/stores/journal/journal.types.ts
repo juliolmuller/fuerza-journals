@@ -1,4 +1,4 @@
-import {Journal} from '../../interfaces'
+import { Journal } from '~/interfaces';
 
 export interface JournalState {
   isFetching: boolean;

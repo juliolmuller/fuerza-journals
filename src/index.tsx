@@ -1,15 +1,13 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { setupServer } from './services/mirage/server';
+import { createRoot } from 'react-dom/client';
 
-if (process.env.NODE_ENV === 'development') {
-  setupServer();
-}
+import App from '~/App';
+import { setupServer } from '~/services/mirage/server';
 
-ReactDOM.render(
+setupServer();
+
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,
-  document.getElementById('root'),
 );

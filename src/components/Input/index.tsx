@@ -6,7 +6,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 function Input({ id, label, value, ...props }: InputProps) {
-  const inputId = id ?? 'input-' + Math.round(Math.random() * 1000);
+  const inputId = id ?? `input-${Math.round(Math.random() * 1000)}`;
 
   return (
     <div className="custom-input">

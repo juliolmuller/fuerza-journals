@@ -1,8 +1,8 @@
-import {User} from '../../interfaces'
+import { User } from '~/interfaces';
 
 export interface AuthState {
-  isAuthenticated: boolean
-  user: User | null
+  isAuthenticated: boolean;
+  user: User | null;
 }
 
 export interface AuthActions {
