@@ -10,8 +10,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "eslint --ext tsx,ts src --fix"
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "axios": "~0.25.0",
@@ -23,12 +22,19 @@
     "zustand": "^3.6.9"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@types/node": "^14.0.0",
+    "@eslint/compat": "^1.2.5",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.10",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "eslint": "^7.32.0",
+    "eslint": "^9.18.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import-helpers": "^2.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.2",
     "miragejs": "^0.1.43",
